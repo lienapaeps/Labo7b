@@ -25,16 +25,6 @@
 
 	</header>
 
-	<c:if test="${not empty errors}">
-		<div class="alert alert-danger">
-			<ul>
-				<c:forEach items="${errros}" var="error">
-					<li>${error}</li>
-				</c:forEach>
-			</ul>
-		</div>
-	</c:if>
-
 	<main id="container">
 		<c:if test="${not empty errors}">
 			<div class="alert alert-danger">
@@ -50,19 +40,19 @@
 		<form method="POST" action="StudentInfo?command=voegStudentToe" novalidate>
 			<fieldset>
 				<legend>Student informatie</legend>
-				<p class="form-group" ${naamClass}>
+				<p class="form-group ${naamClass}">
 					<label class="control-label" for="naam">Naam: * </label>
 					<input id="naam" name="naam" type="text" value="${naamPreviousValue}" required>
 				</p>
-				<p class="form-group" ${voornaamClass}>
+				<p class="form-group ${voornaamClass}">
 					<label class="control-label" for="voornaam">Voornaam: * </label>
 					<input id="voornaam" name="voornaam" type="text" value="${voornaamPreviousValue}">
 				</p>
-				<p class="form-group" ${leeftijdClass}>
+				<p class="form-group ${leeftijdClass}">
 					<label class="control-label" for="leeftijd">Leeftijd: * </label>
 					<input id="leeftijd" name="leeftijd" type="text" value="${leeftijdPreviousValue}">
 				</p>
-				<p class="form-group" ${studierichtingClass}>
+				<p class="form-group ${studierichtingClass}">
 					<label class="control-label" for="studierichting">Studierichting: * </label>
 					<input id="studierichting" name="studierichting" type="text" value="${studierichtingPreviousValue}">
 				</p>
