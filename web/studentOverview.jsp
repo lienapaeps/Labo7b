@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="domain.model.Student"%>
 <%@page import="java.util.Collection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -29,10 +30,6 @@
 	<main id="container">
 	<article>
 		<h2>Overzicht studenten</h2>
-		<%
-			Collection<Student> students = (Collection<Student>) request.getAttribute("studenten");
-			if (students != null) {
-		%>
 		<table id="overview">
 			<tr>
 				<th>Naam</th>
@@ -41,27 +38,25 @@
 				<th>Studierichting</th>
 				<th>Verwijder</th>
 			</tr>
-			<%
-				for (Student student : students) {
-			%>
-			<tr id="<%=student.getNaam()%>">
-				<td><%=student.getNaam()%></td>
-				<td><%=student.getVoornaam()%></td>
-				<td class="getal"><%=student.getLeeftijd()%></td>
-				<td><%=student.getStudierichting()%></td>
-				<td><a href="StudentInfo?command=verwijder&naam=<%=student.getNaam()%>&voornaam=<%=student.getVoornaam()%>&leeftijd=<%=student.getLeeftijd()%>&studierichting=<%=student.getStudierichting()%>">Verwijder</a></td>
+            <c:choose>
+                <c:when test="${not empty studenten}">
+                    <c:forEach var="student" items="${studenten}">
+
+			<tr id="${student.naam}">
+				<td>${student.naam}</td>
+				<td>${student.voornaam}</td>
+				<td class="getal">${student.leeftijd}</td>
+				<td>${student.studierichting}</td>
+				<td><a href="StudentInfo?command=verwijder&naam=${student.naam}&voornaam=${student.voornaam}&leeftijd=${student.leeftijd}&studierichting=${student.studierichting}">Verwijder</a></td>
 			</tr>
-			<%
-				}
-			%>
+                    </c:forEach>
 		</table>
-		<%
-			} else {
-		%>
-		<p>Er zijn nog geen studenten toegevoegd.</p>
-		<%
-			}
-		%>
+            </c:when>
+                <c:otherwise>
+                    <p>Er zijn nog geen studenten toegevoegd.</p>
+                </c:otherwise>
+        </c:choose>
+
 
 	</article>
 	</main>
