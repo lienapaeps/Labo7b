@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="domain.model.Student" %>
-
- <% Student student= (Student) request.getAttribute("student"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +24,7 @@
 		
 </header>
 <main>
-<p id="boodschap">Je vroeg naar volgende gegevens: <%= student.format() %></p>
+<p id="boodschap">Je vroeg naar volgende gegevens: ${param.naam} ${param.voornaam} ${param.leeftijd} ${param.studierichting}</p>
 </main>
 
 </body>
