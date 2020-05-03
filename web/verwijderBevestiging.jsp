@@ -28,10 +28,10 @@
     <article>
         <h2>Verwijder deze student</h2>
 
-        <p>Ben je zeker dat je de student <%=request.getParameter("voornaam")%> <%=request.getParameter("naam")%> wil verwijderen?</p>
-        <form action="StudentInfo?command=verwijderBevestig&naam=<%=request.getParameter("naam")%>&voornaam=<%=request.getParameter("voornaam")%>" method="Post" novalidate>
-            <input type="hidden" name="voornaam" value="Elke">
-            <input type="hidden" name="naam" value="Steegmans">
+        <p>Ben je zeker dat je de student ${param.voornaam} ${param.naam} wil verwijderen?</p>
+        <form action="StudentInfo?command=verwijderBevestig" method="Post" novalidate>
+            <input type="hidden" name="voornaam" value="${param.voornaam}">
+            <input type="hidden" name="naam" value="${param.naam}">
             <input type="submit" name="submit" value="Zeker">
             <input type="submit" name="submit" value="Toch niet">
         </form>
