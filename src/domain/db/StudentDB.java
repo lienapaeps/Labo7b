@@ -24,7 +24,7 @@ public class StudentDB {
 		}
 	}
 
-	private boolean heeftStudent (Student student) {
+	public boolean heeftStudent (Student student) {
 		for (Student s: klasLijst){
 			if (student.getNaam().equals(s.getNaam())){
 				return true;
