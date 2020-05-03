@@ -83,10 +83,12 @@ public class StudentInformatie extends HttpServlet {
 		String studierichting = request.getParameter("studierichting");
 		try{
 			student.setStudierichting(studierichting);
+			request.setAttribute("studierichtingClass", "has-succes");
 			request.setAttribute("studierichtingPreviousValue", studierichting);
 		}
 		catch (DomainException exc){
 			errors.add(exc.getMessage());
+			request.setAttribute("studierichtingClass", "has-error");
 		}
 	}
 
@@ -94,12 +96,15 @@ public class StudentInformatie extends HttpServlet {
 		String leeftijd = request.getParameter("leeftijd");
 		try{
 			student.setLeeftijd(Integer.parseInt(leeftijd));
+			request.setAttribute("leeftijdClass", "has-succes");
 			request.setAttribute("leeftijdPreviousValue", leeftijd);
 		}catch (NumberFormatException exc){
 			errors.add("Vul een geldige leeftijd in.");
+			request.setAttribute("leeftijdClass", "has-error");
 		}
 		catch (DomainException exc){
 			errors.add(exc.getMessage());
+			request.setAttribute("leeftijdClass", "has-error");
 		}
 	}
 
@@ -107,10 +112,12 @@ public class StudentInformatie extends HttpServlet {
 		String voornaam = request.getParameter("voornaam");
 		try{
 			student.setVoornaam(voornaam);
+			request.setAttribute("voornaamClass", "has-succes");
 			request.setAttribute("voornaamPreviousValue", voornaam);
 		}
 		catch (DomainException exc){
 			errors.add(exc.getMessage());
+			request.setAttribute("voornaamClass", "has-error");
 		}
 	}
 
@@ -118,10 +125,12 @@ public class StudentInformatie extends HttpServlet {
 		String naam = request.getParameter("naam");
 		try{
 			student.setNaam(naam);
+			request.setAttribute("naamClass", "has-succes");
 			request.setAttribute("naamPreviousValue", naam);
 		}
 		catch (DomainException exc){
 			errors.add(exc.getMessage());
+			request.setAttribute("naamClass", "has-error");
 		}
 	}
 
@@ -131,22 +140,26 @@ public class StudentInformatie extends HttpServlet {
 	}
 
 	private String vindStudent(HttpServletRequest request) {
-		String naam = request.getParameter("naam");
-		String voornaam = request.getParameter("voornaam");
-		String destination = "";
+		ArrayList<String> errors = new ArrayList<String>();
 
-		if (naam == null || voornaam == null) {
-			destination = "nietGevonden.jsp";
-		} else {
-			Student student = klas.vind(naam, voornaam);
-			if (student == null) {
-				destination = "nietGevonden.jsp";
-			} else {
-				destination = "gevonden.jsp";
-				request.setAttribute("student", student);
+		Student student = new Student();
+		setNaam(student, request, errors);
+		setVoornaam(student, request, errors);
+
+		if (errors.size() == 0) {
+			try {
+				if(klas.heeftStudent(student)){
+					return "gevonden.jsp";
+				}
+				else {
+					return "nietGevonden.jsp";
+				}
+			} catch (DomainException e) {
+				errors.add(e.getMessage());
 			}
 		}
-		return destination;
+		request.setAttribute("errors", errors);
+		return "zoekForm.jsp";
 	}
 
 	private String verwijderBevestig(HttpServletRequest request) {
